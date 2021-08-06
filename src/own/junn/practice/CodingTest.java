@@ -1,7 +1,5 @@
 package own.junn.practice;
 
-import own.junn.practice.coding.StackQueue;
-
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -42,14 +40,4 @@ public class CodingTest {
 
         System.out.println(Arrays.toString(result));
     }
-
-    public static void testPrinter() {
-        int[] priorities = {2, 1, 3, 2};
-//        int[] priorities = {1, 1, 9, 1, 1, 1};
-        int location = 2;
-//        int location = 0;
-
-//        System.out.println(Arrays.toString(StackQueue.Printer(priorities, location)));
-    }
-
 }
