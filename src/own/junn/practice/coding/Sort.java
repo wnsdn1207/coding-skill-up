@@ -11,6 +11,9 @@ public class Sort {
         System.out.println(Arrays.toString(sort.insertionSort(new int[]{5, 2, 6, 7, 8, 22, 3, 1, 2})));
     }
 
+    /**
+     * 버블 정렬
+     */
     private int[] bubbleSort(int[] obj) {
         for (int i = 0; i < obj.length - 1; i++) {
             boolean swap = false;
@@ -32,6 +35,9 @@ public class Sort {
         return obj;
     }
 
+    /**
+     * 선택 정렬
+     */
     private int[] selectionSort(int[] obj) {
         for (int i=0; i<obj.length; i++) {
             int lowest = i;
@@ -49,6 +55,9 @@ public class Sort {
         return obj;
     }
 
+    /**
+     * 삽입 정렬
+     */
     private int[] insertionSort(int[] obj) {
         for (int i=0; i<obj.length-1; i++) {    // 반복 횟수는 길이-1 만큼
             int key;
