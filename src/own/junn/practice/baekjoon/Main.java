@@ -4,16 +4,48 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         String input1 = reader.readLine();
-        String input2 = reader.readLine();
+        int[] progression = new int[Integer.parseInt(input1)];
+        for (int i=0; i<progression.length; i++) {
+            progression[i] = Integer.parseInt(reader.readLine());
+        }
 
 //        System.out.println(new Main().question_2920(input1));
-        System.out.println(new Main().question_2798(input1, input2));
+//        System.out.println(new Main().question_2798(input1, input2));
+        new Main().question_1874(Integer.parseInt(input1), progression);
+    }
+
+    /**
+     * [Baekjoon] 1874 - 스택수열
+     */
+    private void question_1874(int length, int[] progression) {
+        Stack<Integer> stack = new Stack<>();
+        int[] asc = progression.clone();
+        Arrays.sort(asc);
+
+        StringBuilder eventList = new StringBuilder();
+        int idx = 0;
+        for (int i=0; i<length; i++) {
+            stack.push(asc[i]);
+            eventList.append("+").append("\n");
+            while (!stack.isEmpty() && stack.peek() == progression[idx]) {
+                stack.pop();
+                eventList.append("-").append("\n");
+                idx++;
+            }
+        }
+
+        if (stack.isEmpty()) {
+            System.out.println(eventList);
+        } else {
+            System.out.println("NO");
+        }
     }
 
     /**
@@ -34,9 +66,7 @@ public class Main {
                     int total = cards[i] + cards[j] + cards[k];
 
                     if (total <= max) {
-                        if ((max - answer) > (max - total)) {
-                            answer = total;
-                        }
+                        answer = Math.max(answer, total);
                     }
                 }
             }
