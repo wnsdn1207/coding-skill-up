@@ -1,6 +1,14 @@
 # Compiled class file
 *.class
 
+# etc file
+*.xml
+*.iml
+
+# ignore file
+*.gitignore
+.gitignore
+
 # Log file
 *.log
 
