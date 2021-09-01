@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -16,7 +15,6 @@ public class Main {
             String[] input2 = reader.readLine().split(" ");
 
             System.out.println(new Main().question_1966(Integer.parseInt(input1[1]), Arrays.stream(input2).mapToInt(Integer::parseInt).toArray()));
-            System.out.println();
         }
     }
 
@@ -26,7 +24,6 @@ public class Main {
     private int question_1966(int index, int[] documents) {
         int printOrder = 0;
 
-//        PriorityQueue<Document> queue = new PriorityQueue<>();
         Queue<Document> queue = new LinkedList<>();
         for (int i=0; i<documents.length; i++) {
             Document document = new Document(i, documents[i]);
@@ -34,7 +31,7 @@ public class Main {
         }
 
         int idx = 1;
-        while (!queue.isEmpty() && index == queue.peek().getIndex()) {
+        while (!queue.isEmpty()) {
             int max = 0;
             for (int i=0; i<queue.size(); i++) {
                 Document tmp = queue.poll();
@@ -42,11 +39,17 @@ public class Main {
                 queue.add(tmp);
             }
 
-            Document tmp;
-            if ((tmp = queue.poll()).getPriority() == max) {
-                idx++;
-            } else {
-
+            for (int i=0; i<queue.size(); i++) {
+                Document tmp = queue.poll();
+                if (tmp.getPriority() == max) {
+                    if (tmp.getIndex() == index) {
+                        return idx;
+                    }
+                    idx++;
+                    break;
+                } else {
+                    queue.add(tmp);
+                }
             }
         }
 
