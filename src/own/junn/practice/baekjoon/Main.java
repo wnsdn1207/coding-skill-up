@@ -3,22 +3,89 @@ package own.junn.practice.baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        String input1 = reader.readLine();
-        int[] progression = new int[Integer.parseInt(input1)];
-        for (int i=0; i<progression.length; i++) {
-            progression[i] = Integer.parseInt(reader.readLine());
+        String caseCount = reader.readLine();
+        for (int i=0; i<Integer.parseInt(caseCount); i++) {
+            String[] input1 = reader.readLine().split(" ");
+            String[] input2 = reader.readLine().split(" ");
+
+            System.out.println(new Main().question_1966(Integer.parseInt(input1[1]), Arrays.stream(input2).mapToInt(Integer::parseInt).toArray()));
+            System.out.println();
+        }
+    }
+
+    /**
+     * [Baekjoon] 1966 - 프린터큐
+     */
+    private int question_1966(int index, int[] documents) {
+        int printOrder = 0;
+
+//        PriorityQueue<Document> queue = new PriorityQueue<>();
+        Queue<Document> queue = new LinkedList<>();
+        for (int i=0; i<documents.length; i++) {
+            Document document = new Document(i, documents[i]);
+            queue.add(document);
         }
 
-//        System.out.println(new Main().question_2920(input1));
-//        System.out.println(new Main().question_2798(input1, input2));
-        new Main().question_1874(Integer.parseInt(input1), progression);
+        int idx = 1;
+        while (!queue.isEmpty() && index == queue.peek().getIndex()) {
+            int max = 0;
+            for (int i=0; i<queue.size(); i++) {
+                Document tmp = queue.poll();
+                max = Math.max(tmp.getPriority(), max);
+                queue.add(tmp);
+            }
+
+            Document tmp;
+            if ((tmp = queue.poll()).getPriority() == max) {
+                idx++;
+            } else {
+
+            }
+        }
+
+        return printOrder;
+    }
+
+    private class Document implements Comparable<Document> {
+        int index;
+        int priority;
+
+        Document(int index, int priority) {
+            this.index = index;
+            this.priority = priority;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public int getPriority() {
+            return priority;
+        }
+
+        @Override
+        public int compareTo(Document o) {
+            if (this.priority < o.priority) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Document{" +
+                    "index=" + index +
+                    ", priority=" + priority +
+                    '}';
+        }
     }
 
     /**
