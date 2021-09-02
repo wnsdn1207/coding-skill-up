@@ -1,29 +1,66 @@
 package own.junn.practice.baekjoon;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.io.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         String caseCount = reader.readLine();
         for (int i=0; i<Integer.parseInt(caseCount); i++) {
-            String[] input1 = reader.readLine().split(" ");
-            String[] input2 = reader.readLine().split(" ");
+            String input1 = reader.readLine();
 
-            System.out.println(new Main().question_1966(Integer.parseInt(input1[1]), Arrays.stream(input2).mapToInt(Integer::parseInt).toArray()));
+            writer.write(new Main().question_5397(input1) + "\n");
         }
+
+        writer.flush();
+        writer.close();
+    }
+
+    /**
+     * [Baekjoon] 5397 - 키로거
+     */
+    private String question_5397(String input) {
+        int idx = 0;
+        StringBuilder password = new StringBuilder();
+
+        String[] allTheInput = input.split("");
+
+        for (int i=0; i<allTheInput.length; i++) {
+            if (allTheInput[i].equalsIgnoreCase("<")) {
+                if (idx > 0) {
+                    idx--;
+                    continue;
+                }
+            } else if (allTheInput[i].equalsIgnoreCase(">")) {
+                if (idx < password.length()+1) {
+                    idx++;
+                    continue;
+                }
+            } else if (allTheInput[i].equalsIgnoreCase("-")) {
+                if (password.length() > 0) {
+//                    password = password.append((0, password.toString().indexOf(password.charAt(idx), idx)) + password.substring(password.toString().indexOf(password.charAt(idx), idx)));
+                    continue;
+                }
+            }
+
+            password.append(allTheInput[i]);
+            idx++;
+        }
+
+
+        return password.toString();
     }
 
     /**
      * [Baekjoon] 1966 - 프린터큐
      */
     private int question_1966(int index, int[] documents) {
-        int printOrder = 0;
-
         Queue<Document> queue = new LinkedList<>();
         for (int i=0; i<documents.length; i++) {
             Document document = new Document(i, documents[i]);
@@ -53,10 +90,10 @@ public class Main {
             }
         }
 
-        return printOrder;
+        return idx;
     }
 
-    private class Document implements Comparable<Document> {
+    private class Document {
         int index;
         int priority;
 
@@ -71,23 +108,6 @@ public class Main {
 
         public int getPriority() {
             return priority;
-        }
-
-        @Override
-        public int compareTo(Document o) {
-            if (this.priority < o.priority) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "Document{" +
-                    "index=" + index +
-                    ", priority=" + priority +
-                    '}';
         }
     }
 
