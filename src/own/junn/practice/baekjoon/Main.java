@@ -8,15 +8,20 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String caseCount = reader.readLine();
-        for (int i=0; i<Integer.parseInt(caseCount); i++) {
-            String input1 = reader.readLine();
-
-            writer.write(new Main().question_5397(input1) + "\n");
-        }
+        String input1 = reader.readLine();
+        writer.write(new Main().question_10930(input1) + "\n");
 
         writer.flush();
         writer.close();
+    }
+
+    /**
+     * [Baekjoon] 10930 - SHA256
+     */
+    public String question_10930(String input) {
+        
+
+        return "";
     }
 
     /**
