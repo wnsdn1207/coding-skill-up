@@ -1,10 +1,7 @@
 package own.junn.practice.baekjoon;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -26,33 +23,33 @@ public class Main {
      * [Baekjoon] 5397 - 키로거
      */
     private String question_5397(String input) {
-        int idx = 0;
         StringBuilder password = new StringBuilder();
 
-        String[] allTheInput = input.split("");
+        String[] passwordArr = input.split("");
 
-        for (int i=0; i<allTheInput.length; i++) {
-            if (allTheInput[i].equalsIgnoreCase("<")) {
-                if (idx > 0) {
-                    idx--;
-                    continue;
+        Stack<String> leftStack = new Stack<>();
+        Stack<String> rightStack = new Stack<>();
+
+        for (int i=0; i<passwordArr.length; i++) {
+            if (passwordArr[i].equalsIgnoreCase("<")) {
+                if (!leftStack.isEmpty()) {
+                    rightStack.add(leftStack.pop());
                 }
-            } else if (allTheInput[i].equalsIgnoreCase(">")) {
-                if (idx < password.length()+1) {
-                    idx++;
-                    continue;
+            } else if (passwordArr[i].equalsIgnoreCase(">")) {
+                if (!rightStack.isEmpty()) {
+                    leftStack.add(rightStack.pop());
                 }
-            } else if (allTheInput[i].equalsIgnoreCase("-")) {
-                if (password.length() > 0) {
-//                    password = password.append((0, password.toString().indexOf(password.charAt(idx), idx)) + password.substring(password.toString().indexOf(password.charAt(idx), idx)));
-                    continue;
+            } else if (passwordArr[i].equalsIgnoreCase("-")) {
+                if (!leftStack.isEmpty()) {
+                    leftStack.pop();
                 }
+            } else {
+                leftStack.add(passwordArr[i]);
             }
-
-            password.append(allTheInput[i]);
-            idx++;
         }
 
+        Collections.reverse(rightStack);
+        password.append(String.join("", leftStack)).append(String.join("", rightStack));
 
         return password.toString();
     }
