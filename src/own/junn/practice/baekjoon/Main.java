@@ -1,10 +1,12 @@
 package own.junn.practice.baekjoon;
 
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -18,10 +20,17 @@ public class Main {
     /**
      * [Baekjoon] 10930 - SHA256
      */
-    public String question_10930(String input) {
-        
+    public String question_10930(String input) throws NoSuchAlgorithmException {
+        MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        sha.update(input.getBytes());
+        byte[] byteData = sha.digest();
 
-        return "";
+        StringBuilder sb = new StringBuilder();
+        for (byte byteDatum : byteData) {
+            sb.append(Integer.toString((byteDatum & 0xff) + 0x100, 16).substring(1));
+        }
+
+        return sb.toString();
     }
 
     /**
