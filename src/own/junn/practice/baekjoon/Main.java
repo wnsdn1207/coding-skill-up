@@ -10,11 +10,51 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String[] input = reader.readLine().split(" ");
-        writer.write(question_2501(Integer.parseInt(input[0]), Integer.parseInt(input[1])) + "\n");
+        int caseCount = Integer.parseInt(reader.readLine());
+        for (int i=0; i<caseCount; i++) {
+            int input = Integer.parseInt(reader.readLine());
+
+            writer.write(question_3460_2(input) + "\n");
+        }
 
         writer.flush();
         writer.close();
+    }
+
+    /**
+     * [Baekjoon] 3460 - 이진수 - 2
+     */
+    public static String question_3460_2(int input) {
+        StringBuilder sb = new StringBuilder();
+
+        int idx = 0;
+        while (input > 0) {
+            if (input%2 == 1) {
+                sb.append(idx).append(" ");
+            }
+            input /= 2;
+            idx++;
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * [Baekjoon] 3460 - 이진수
+     */
+    public static String question_3460(int input) {
+        StringBuilder sb = new StringBuilder();
+
+        String[] binaryArr = Integer.toBinaryString(input).split("");
+
+        for (int i=binaryArr.length-1; i>-1; i--) {
+
+            if (binaryArr[i].equalsIgnoreCase("1")) {
+                sb.append(binaryArr.length-(i+1)).append(" ");
+            }
+        }
+
+        return sb.toString();
     }
 
     /**
