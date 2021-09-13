@@ -10,11 +10,29 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String input1 = reader.readLine();
-        writer.write(new Main().question_10930(input1) + "\n");
+        String[] input = reader.readLine().split(" ");
+        writer.write(question_2501(Integer.parseInt(input[0]), Integer.parseInt(input[1])) + "\n");
 
         writer.flush();
         writer.close();
+    }
+
+    /**
+     * [Baekjoon] 2501 - 약수구하기
+     */
+    public static int question_2501(int num, int idx) {
+        ArrayList<Integer> divisors = new ArrayList<>();
+
+        for (int i=0; i<num; i++) {
+            if (num % (i+1) == 0) {
+                divisors.add(i+1);
+                if (divisors.size() >= idx) {
+                    return divisors.get(idx-1);
+                }
+            }
+        }
+
+        return 0;
     }
 
     /**
