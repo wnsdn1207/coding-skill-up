@@ -10,15 +10,27 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int caseCount = Integer.parseInt(reader.readLine());
-        for (int i=0; i<caseCount; i++) {
-            int input = Integer.parseInt(reader.readLine());
+        int length = Integer.parseInt(reader.readLine());
+        int[] input = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-            writer.write(question_3460_2(input) + "\n");
-        }
+        writer.write(question_10818(input, length) + "\n");
 
         writer.flush();
         writer.close();
+    }
+
+    /**
+     * [Baekjoon] 10818 - 최소, 최대
+     */
+    public static String question_10818(int[] input, int length) {
+        int max=-1000001, min=1000001;
+
+        for (int i : input) {
+            if (min > i) min = i;
+            if (max < i) max = i;
+        }
+
+        return min + " " + max;
     }
 
     /**
