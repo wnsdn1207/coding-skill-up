@@ -12,11 +12,36 @@ public class Main {
 
         int lineCount = Integer.parseInt(reader.readLine());
 
-        writer.write(question_2443(lineCount) + "\n");
+        writer.write(question_2444(lineCount) + "\n");
 
         writer.flush();
         writer.close();
     }
+
+    /**
+     * [Baekjoon] 2444 - 별 찍기 - 7
+     */
+    public static String question_2444(int lineCount) {
+        StringBuilder sb = new StringBuilder();
+
+        int staticCount = lineCount*2-1;
+        int standard = staticCount/2;
+
+        for (int i=0; i<staticCount; i++) {
+            int begin = Math.abs(standard-i), end = standard*2-begin;
+            for (int j=0; j<=end; j++) {
+                if (j >= begin) {
+                    sb.append("*");
+                } else {
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
 
     /**
      * [Baekjoon] 2443 - 별 찍기 - 6
