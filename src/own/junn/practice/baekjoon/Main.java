@@ -1,8 +1,8 @@
 package own.junn.practice.baekjoon;
 
-import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -10,15 +10,73 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int length = Integer.parseInt(reader.readLine());
-        int[] input = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int lineCount = Integer.parseInt(reader.readLine());
 
-        writer.write(question_10818(input, length) + "\n");
+        writer.write(question_2443(lineCount) + "\n");
 
         writer.flush();
         writer.close();
     }
 
+    /**
+     * [Baekjoon] 2443 - 별 찍기 - 6
+     */
+    public static String question_2443(int lineCount) {
+        StringBuilder sb = new StringBuilder();
+
+        int line = 0;
+        int staticCount = lineCount*2;
+        for (int i=0; i<lineCount; i++) {
+            if (line > 0) {
+                for (int k=0; k<line; k++) {
+                    sb.append(" ");
+                }
+            }
+            for (int j=0; j<staticCount-(2*(i+1)-1); j++) {
+                sb.append("*");
+            }
+            sb.append("\n");
+            line++;
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * [Baekjoon] 2439 - 별 찍기 - 2
+     */
+    public static String question_2439(int lineCount) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i=1; i<lineCount+1; i++) {
+            for (int j=0; j<lineCount; j++) {
+                if (lineCount-i <= j) {
+                    sb.append("*");
+                } else {
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * [Baekjoon] 2438 - 별 찍기 - 1
+     */
+    public static String question_2438(int lineCount) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i=1; i<lineCount+1; i++) {
+            for (int j=0; j<i; j++) {
+                sb.append("*");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
     /**
      * [Baekjoon] 10818 - 최소, 최대
      */
