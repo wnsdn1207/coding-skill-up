@@ -10,13 +10,37 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        writer.write(question_1546(Integer.parseInt(reader.readLine()), reader.readLine()) + "\n");
+        writer.write(question_10809(reader.readLine()) + "\n");
 
         writer.flush();
         writer.close();
         reader.close();
     }
 
+    /**
+     * [Baekjoon] 10809 - 알파벳 찾기
+     */
+    public static String question_10809(String input) {
+        String[] inputArr = input.split("");
+        StringBuilder result = new StringBuilder();
+
+        for (int i=97; i<123; i++) {
+            int idx = 0;
+            boolean isExists = false;
+            for (String s : inputArr) {
+                if (s.charAt(0) == (char) i) {
+                    result.append(idx).append(" ");
+                    isExists = true;
+                    break;
+                }
+                idx++;
+            }
+            if (!isExists) {
+                result.append(-1).append(" ");
+            }
+        }
+        return result.toString();
+    }
     /**
      * [Baekjoon] 1546 - 평균
      */
