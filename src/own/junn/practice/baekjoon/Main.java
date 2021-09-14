@@ -10,14 +10,46 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int lineCount = Integer.parseInt(reader.readLine());
+        String lineCount = reader.readLine();
 
-        writer.write(question_2444(lineCount) + "\n");
+        writer.write(question_5598_2(lineCount.toCharArray()) + "\n");
 
         writer.flush();
         writer.close();
     }
 
+    /**
+     * [Baekjoon] 5598 - 카이사르 암호 - 2
+     */
+    public static String question_5598_2(char[] input) {
+        for (int i=0; i<input.length; i++) {
+            // Using Ascii Code (A: 65, Z: 90)
+            input[i] += input[i] - 3 < 'A' ? 23 : -3;
+        }
+
+        return new String(input);
+    }
+    /**
+     * [Baekjoon] 5598 - 카이사르 암호
+     *
+     */
+    public static String question_5598(String input) {
+        String[] orgAlphabet = { "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z" };
+        String[] cvtAlphabet = { "D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","A","B","C" };
+
+        String[] inputArr = input.split("");
+        StringBuilder answer = new StringBuilder();
+
+        for (String s : inputArr) {
+            for (int i=0; i< cvtAlphabet.length; i++) {
+                if (s.equalsIgnoreCase(cvtAlphabet[i])) {
+                    answer.append(orgAlphabet[i]);
+                }
+            }
+        }
+
+        return answer.toString();
+    }
     /**
      * [Baekjoon] 2444 - 별 찍기 - 7
      */
