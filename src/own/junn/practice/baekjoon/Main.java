@@ -10,15 +10,30 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-//        int divisorCount = Integer.parseInt(reader.readLine());
-//        String divisor = reader.readLine();
-//        writer.write(question_1037_2(divisor) + "\n");
-        question_2576(reader, writer);
+        writer.write(question_1546(Integer.parseInt(reader.readLine()), reader.readLine()) + "\n");
 
         writer.flush();
         writer.close();
+        reader.close();
     }
 
+    /**
+     * [Baekjoon] 1546 - 평균
+     */
+    public static double question_1546(int count, String score) {
+        String[] scoreArr = score.split(" ");
+        int[] scores = new int[count];
+
+        int max = Integer.MIN_VALUE;
+        double sum = 0;
+        for (int i=0; i<scores.length; i++) {
+            scores[i] = Integer.parseInt(scoreArr[i]);
+            max = Math.max(max, scores[i]);
+            sum += scores[i];
+        }
+
+        return sum / max * 100 / count;
+    }
     /**
      * [Baekjoon] 2576 - 홀수
      */
