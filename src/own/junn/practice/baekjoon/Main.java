@@ -10,13 +10,41 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String input = reader.readLine();
-        writer.write(question_10872(Integer.parseInt(input)) + "\n");
+        int divisorCount = Integer.parseInt(reader.readLine());
+        String divisor = reader.readLine();
+        writer.write(question_1037_2(divisor) + "\n");
 
         writer.flush();
         writer.close();
     }
 
+    /**
+     * [Baekjoon] 1037 - 약수 - 2
+     */
+    public static int question_1037_2(String divisor) {
+        int[] divisors = convertArrayType(divisor.split(" "));
+
+        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+        for (int d : divisors) {
+            if (max < d) {
+                max = d;
+            }
+            if (min > d) {
+                min = d;
+            }
+        }
+
+        return max * min;
+    }
+    /**
+     * [Baekjoon] 1037 - 약수
+     */
+    public static int question_1037(String divisor) {
+        int[] divisors = Arrays.stream(divisor.split(" ")).mapToInt(Integer::parseInt).toArray();
+        Arrays.sort(divisors);
+
+        return divisors[0] * divisors[divisors.length-1];
+    }
     /**
      * [Baekjoon] 10872 - 팩토리얼
      */
@@ -397,5 +425,14 @@ public class Main {
         } else {
             return "mixed";
         }
+    }
+
+    private static int[] convertArrayType(String[] origin) {
+        int[] converted = new int[origin.length];
+        for (int i=0; i<origin.length; i++) {
+            converted[i] = Integer.parseInt(origin[i]);
+        }
+
+        return converted;
     }
 }
