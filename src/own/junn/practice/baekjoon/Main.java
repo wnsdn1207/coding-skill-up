@@ -10,14 +10,37 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int divisorCount = Integer.parseInt(reader.readLine());
-        String divisor = reader.readLine();
-        writer.write(question_1037_2(divisor) + "\n");
+//        int divisorCount = Integer.parseInt(reader.readLine());
+//        String divisor = reader.readLine();
+//        writer.write(question_1037_2(divisor) + "\n");
+        question_2576(reader, writer);
 
         writer.flush();
         writer.close();
     }
 
+    /**
+     * [Baekjoon] 2576 - 홀수
+     */
+    public static void question_2576(BufferedReader reader, BufferedWriter writer) throws IOException {
+        int min = Integer.MAX_VALUE, sum = 0;
+        for (int i=0; i<7; i++) {
+            int input = Integer.parseInt(reader.readLine());
+            if (input % 2 == 1) {
+                sum += input;
+                if (min > input) {
+                    min = input;
+                }
+            }
+        }
+
+        if (min == Integer.MAX_VALUE) {
+            writer.write(-1 + "\n");
+        } else {
+            writer.write(sum + "\n");
+            writer.write(min + "\n");
+        }
+    }
     /**
      * [Baekjoon] 1037 - 약수 - 2
      */
