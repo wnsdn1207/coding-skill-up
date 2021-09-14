@@ -10,14 +10,28 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String lineCount = reader.readLine();
-
-        writer.write(question_5598_2(lineCount.toCharArray()) + "\n");
+        String input = reader.readLine();
+        writer.write(question_10872(Integer.parseInt(input)) + "\n");
 
         writer.flush();
         writer.close();
     }
 
+    /**
+     * [Baekjoon] 10872 - 팩토리얼
+     */
+    public static int question_10872(int count) {
+        if (count == 0 || count == 1) {
+            return 1;
+        }
+        return count * question_10872(count-1);
+    }
+    /**
+     * [Baekjoon] 2562 - 최댓값
+     */
+    public static int question_2562(int max, int input) {
+        return Math.max(max, input);
+    }
     /**
      * [Baekjoon] 5598 - 카이사르 암호 - 2
      */
