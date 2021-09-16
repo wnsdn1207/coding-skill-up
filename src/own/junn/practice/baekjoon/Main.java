@@ -10,11 +10,61 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        writer.write(question_10809(reader.readLine()) + "\n");
+        StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
+
+        writer.write(recommendId(tokenizer.nextToken()) + "\n");
 
         writer.flush();
         writer.close();
         reader.close();
+    }
+
+    /**
+     * [Programmers] 신규 아이디 추천
+     */
+    public static String recommendId(String new_id) {
+        new_id = new_id.toLowerCase();
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : new_id.split("")) {
+            if (s.matches("^[0-9a-z-_.]$")) {
+                sb.append(s);
+            }
+        }
+        new_id = sb.toString();
+        sb.setLength(0);
+
+        while (new_id.contains("..")) {
+            new_id = new_id.replace("..", ".");
+        }
+
+        if (new_id.substring(0, 1).equalsIgnoreCase(".")) {
+            new_id = new_id.substring(1);
+        }
+        if (!new_id.isEmpty() && new_id.substring(new_id.length()-1).equalsIgnoreCase(".")) {
+            new_id = new_id.substring(0, new_id.length()-1);
+        }
+
+        if (new_id.isEmpty()) {
+            return "aaa";
+        } else if (new_id.length() <= 2) {
+            if (new_id.length() == 1) {
+                new_id = new_id + new_id + new_id;
+            } else {
+                new_id = new_id + new_id.substring(1);
+            }
+        } else if (new_id.length() >= 16) {
+            new_id = new_id.substring(0, 15);
+        }
+
+        if (new_id.substring(0, 1).equalsIgnoreCase(".")) {
+            new_id = new_id.substring(1);
+        }
+        if (new_id.substring(new_id.length()-1).equalsIgnoreCase(".")) {
+            new_id = new_id.substring(0, new_id.length()-1);
+        }
+
+        return new_id;
     }
 
     /**

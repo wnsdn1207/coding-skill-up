@@ -8,24 +8,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.StringTokenizer;
 
 public class TestCase {
     public static void main(String[] args) throws Exception {
-//       stringTest();
+       stringTest();
 //        stringBuilderTest();
 //        stringPerformanceTest(1000000);
-        encryptSha256("Baekjoon");
+//        encryptSha256("Baekjoon");
+//        stringTokenizerTest();
     }
 
 
     private static void stringTest() {
-        String test = "123456789";
-        int idx = 2;
-
-        System.out.println(test);
-        System.out.println(test.charAt(idx));
-        System.out.println(test.substring(0, test.indexOf(test.charAt(idx))));
-        System.out.println(test.substring(test.indexOf(test.charAt(idx))));
+        String test = "ThisistheTestMessage";
+        System.out.println(RegexUtil.startBy(test, "Thisis"));
+        System.out.println(test.matches("^This"));
     }
 
     private static void stringBuilderTest() {
@@ -79,5 +77,16 @@ public class TestCase {
         }
         System.out.printf("Origin : %s\n", origin);
         System.out.printf("Encode : %s\n", sb);
+    }
+
+    public static void stringTokenizerTest() {
+        String test = "1,./2,3//4.5,./6";
+        StringTokenizer tokenizer = new StringTokenizer(test, ",./");
+
+        System.out.println(tokenizer.countTokens());
+
+        while(tokenizer.hasMoreTokens()) {
+            System.out.println("token   : "+ tokenizer.nextToken());
+        }
     }
 }
