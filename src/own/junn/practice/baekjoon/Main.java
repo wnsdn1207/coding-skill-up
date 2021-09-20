@@ -10,15 +10,59 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
+        int loopCount = Integer.parseInt(reader.readLine());
+        StackImpl stack = new StackImpl();
+        for (int i=0; i<loopCount; i++) {
+            String command = reader.readLine();
 
-        writer.write(recommendId(tokenizer.nextToken()) + "\n");
+            if (command.startsWith("push")) {
+                stack.push(Integer.parseInt(command.split(" ")[1]));
+            } else if (command.startsWith("pop")) {
+                writer.write(stack.pop() + "\n");
+            } else if (command.startsWith("size")) {
+                writer.write(stack.size() + "\n");
+            } else if (command.startsWith("empty")) {
+                writer.write(stack.empty() + "\n");
+            } else if (command.startsWith("top")) {
+                writer.write(stack.top() + "\n");
+            }
+        }
 
         writer.flush();
         writer.close();
         reader.close();
     }
 
+    /**
+     * [Baekjoon] 10828 - 스택
+     */
+    private static class StackImpl {
+        List<Integer> stack;
+
+        public StackImpl() {
+            this.stack = new LinkedList<>();
+        }
+
+        public void push(int x) {
+            this.stack.add(x);
+        }
+
+        public int pop() {
+            return this.stack.size() == 0 ? -1 : this.stack.remove(this.stack.size()-1);
+        }
+
+        public int size() {
+            return this.stack.size();
+        }
+
+        public int empty() {
+            return this.stack.isEmpty() ? 1 : 0;
+        }
+
+        public int top() {
+            return this.stack.size() == 0 ? -1 : this.stack.get(this.stack.size()-1);
+        }
+    }
     /**
      * [Programmers] 신규 아이디 추천
      */

@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class TestCase {
     public static void main(String[] args) throws Exception {
@@ -22,8 +23,7 @@ public class TestCase {
 
     private static void stringTest() {
         String test = "ThisistheTestMessage";
-        System.out.println(RegexUtil.startBy(test, "Thisis"));
-        System.out.println(test.matches("^This"));
+        System.out.println(test.matches(Pattern.quote("^[This]")));
     }
 
     private static void stringBuilderTest() {
@@ -87,6 +87,39 @@ public class TestCase {
 
         while(tokenizer.hasMoreTokens()) {
             System.out.println("token   : "+ tokenizer.nextToken());
+        }
+    }
+
+    public static void makeJsonTest() {
+
+    }
+
+    private static class FileTest {
+        private String fileName;
+        private String file_name;
+
+        public String getFileName() {
+            return fileName;
+        }
+
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
+        }
+
+        public String getFile_name() {
+            return file_name;
+        }
+
+        public void setFile_name(String file_name) {
+            this.file_name = file_name;
+        }
+
+        @Override
+        public String toString() {
+            return "FileTest{" +
+                    "fileName='" + fileName + '\'' +
+                    ", file_name='" + file_name + '\'' +
+                    '}';
         }
     }
 }
