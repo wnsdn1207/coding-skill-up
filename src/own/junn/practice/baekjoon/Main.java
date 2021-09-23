@@ -11,22 +11,26 @@ public class Main {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int loopCount = Integer.parseInt(reader.readLine());
-        QueueImpl queue = new QueueImpl();
+        DequeImpl deque = new DequeImpl();
         for (int i=0; i<loopCount; i++) {
             String command = reader.readLine();
 
-            if (command.startsWith("push")) {
-                queue.push(Integer.parseInt(command.split(" ")[1]));
-            } else if (command.startsWith("pop")) {
-                writer.write(queue.pop() + "\n");
+            if (command.startsWith("push_front")) {
+                deque.pushFront(Integer.parseInt(command.split(" ")[1]));
+            } else if (command.startsWith("push_back")) {
+                deque.pushBack(Integer.parseInt(command.split(" ")[1]));
+            } else if (command.startsWith("pop_front")) {
+                writer.write(deque.popFront() + "\n");
+            } else if (command.startsWith("pop_back")){
+                writer.write(deque.popBack() + "\n");
             } else if (command.startsWith("size")) {
-                writer.write(queue.size() + "\n");
+                writer.write(deque.size() + "\n");
             } else if (command.startsWith("empty")) {
-                writer.write(queue.empty() + "\n");
+                writer.write(deque.empty() + "\n");
             } else if (command.startsWith("front")) {
-                writer.write(queue.front() + "\n");
+                writer.write(deque.front() + "\n");
             } else if (command.startsWith("back")) {
-                writer.write(queue.back() + "\n");
+                writer.write(deque.back() + "\n");
             }
         }
 
@@ -35,6 +39,104 @@ public class Main {
         reader.close();
     }
 
+    /**
+     * [Baekjoon] 10866 - 덱
+     */
+    private static class DequeImpl {
+        private final List<Integer> deque;
+        private int front;
+        private int rear;
+
+        private DequeImpl() {
+            this.deque = new ArrayList<>();
+            this.front = -1;
+            this.rear = -1;
+        }
+
+        public void pushFront(int x) {
+            this.front = x;
+            if (this.deque.size() == 0) {
+                this.deque.add(x);
+
+                this.rear = x;
+            } else {
+                this.deque.add(this.deque.size(), x);
+
+                this.rear = this.deque.get(0);
+            }
+        }
+
+        public void pushBack(int x) {
+            this.rear = x;
+            if (this.deque.size() == 0) {
+                this.deque.add(x);
+
+                this.front = x;
+            } else {
+                this.deque.add(0, x);
+
+                this.front = this.deque.get(this.deque.size()-1);
+            }
+        }
+
+        public int popFront() {
+            if (this.deque.isEmpty()) {
+                this.front = -1;
+                this.rear = -1;
+
+                return -1;
+            }
+
+            int result = this.deque.remove(this.deque.size()-1);
+
+            if (this.deque.isEmpty()) {
+                this.front = -1;
+                this.rear = -1;
+            } else {
+                this.front = this.deque.get(this.deque.size()-1);
+                this.rear = this.deque.get(0);
+            }
+
+            return result;
+        }
+
+        public int popBack() {
+            if (this.deque.isEmpty()) {
+                this.front = -1;
+                this.rear = -1;
+
+                return -1;
+            }
+
+            int result = this.deque.remove(0);
+
+            if (this.deque.isEmpty()) {
+                this.rear = -1;
+                this.front = -1;
+            } else {
+                this.rear = this.deque.get(0);
+                this.front = this.deque.get(this.deque.size()-1);
+            }
+
+            return result;
+        }
+
+        public int size() {
+            return this.deque.size();
+        }
+
+        public int empty() {
+            return this.deque.isEmpty() ? 1 : 0;
+        }
+
+        public int front() {
+            return this.deque.isEmpty() ? -1 : this.front;
+        }
+
+        public int back() {
+            return this.deque.isEmpty() ? -1 : this.rear;
+        }
+    }
     /**
      * [Baekjoon] 10845 - 큐
      */
