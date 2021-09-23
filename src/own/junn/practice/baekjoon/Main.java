@@ -11,20 +11,22 @@ public class Main {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int loopCount = Integer.parseInt(reader.readLine());
-        StackImpl stack = new StackImpl();
+        QueueImpl queue = new QueueImpl();
         for (int i=0; i<loopCount; i++) {
             String command = reader.readLine();
 
             if (command.startsWith("push")) {
-                stack.push(Integer.parseInt(command.split(" ")[1]));
+                queue.push(Integer.parseInt(command.split(" ")[1]));
             } else if (command.startsWith("pop")) {
-                writer.write(stack.pop() + "\n");
+                writer.write(queue.pop() + "\n");
             } else if (command.startsWith("size")) {
-                writer.write(stack.size() + "\n");
+                writer.write(queue.size() + "\n");
             } else if (command.startsWith("empty")) {
-                writer.write(stack.empty() + "\n");
-            } else if (command.startsWith("top")) {
-                writer.write(stack.top() + "\n");
+                writer.write(queue.empty() + "\n");
+            } else if (command.startsWith("front")) {
+                writer.write(queue.front() + "\n");
+            } else if (command.startsWith("back")) {
+                writer.write(queue.back() + "\n");
             }
         }
 
@@ -33,6 +35,65 @@ public class Main {
         reader.close();
     }
 
+    /**
+     * [Baekjoon] 10845 - 큐
+     */
+    private static class QueueImpl {
+        private final Queue<Integer> queue;
+        private int front;
+        private int back;
+
+        public QueueImpl() {
+            this.queue = new LinkedList<>();
+            this.front = -1;
+            this.back = -1;
+        }
+
+        public void push(int x) {
+            this.queue.add(x);
+            this.back = x;
+
+            if (this.queue.size() == 1) {
+                this.front = x;
+            }
+        }
+
+        public int pop() {
+            int result = -1;
+
+            if (this.queue.size() > 0) {
+                result = this.queue.remove();
+
+                if (this.queue.size() > 0) {
+                    this.front = this.queue.peek();
+                } else {
+                    this.front = -1;
+                    this.back = -1;
+                }
+            } else {
+                this.front = -1;
+                this.back = -1;
+            }
+
+            return result;
+        }
+
+        public int size() {
+            return this.queue.size();
+        }
+
+        public int empty() {
+            return this.queue.isEmpty() ? 1 : 0;
+        }
+
+        public int front() {
+            return this.queue.isEmpty() ? -1 : this.front;
+        }
+
+        public int back() {
+            return this.queue.isEmpty() ? -1 : this.back;
+        }
+    }
     /**
      * [Baekjoon] 10828 - 스택
      */
