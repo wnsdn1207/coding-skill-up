@@ -12,14 +12,39 @@ public class Main {
 
         int caseCount = Integer.parseInt(reader.readLine());
         for (int i=0; i<caseCount; i++) {
-//            writer.write(question_9093(reader.readLine())+"\n");
-//            writer.write(question_9093_2(reader.readLine())+"\n");
-            writer.write(question_9093_3(reader.readLine())+"\n");
+            writer.write(question_9012(reader.readLine())+"\n");
         }
 
         writer.flush();
         writer.close();
         reader.close();
+    }
+
+    /**
+     * [Baekjoon] 9012 - 괄호
+     */
+    public static String question_9012(String input) {
+        String[] inputArr = input.split("");
+
+        Stack<String> stack = new Stack<>();
+
+        for (String s : inputArr) {
+            try {
+                if (s.equalsIgnoreCase("(")) {
+                    stack.push(s);
+                } else {
+                    stack.pop();
+                }
+            } catch (EmptyStackException e) {
+                return "NO";
+            }
+        }
+
+        if (stack.size() == 0) {
+            return "YES";
+        }
+
+        return "NO";
     }
 
     /**
