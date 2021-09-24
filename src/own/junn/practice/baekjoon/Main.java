@@ -10,13 +10,77 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        writer.write(question_1158(reader.readLine().split(" ")));
+        int caseCount = Integer.parseInt(reader.readLine());
+        for (int i=0; i<caseCount; i++) {
+//            writer.write(question_9093(reader.readLine())+"\n");
+//            writer.write(question_9093_2(reader.readLine())+"\n");
+            writer.write(question_9093_3(reader.readLine())+"\n");
+        }
 
         writer.flush();
         writer.close();
         reader.close();
     }
 
+    /**
+     * [Baekjoon] 9093 - 단어 뒤집기_3
+     */
+    public static String question_9093_3(String input) {
+        String[] inputArr = input.split(" ");
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : inputArr) {
+            StringBuilder tmp = new StringBuilder(s);
+            sb.append(tmp.reverse());
+            sb.append(" ");
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * [Baekjoon] 9093 - 단어 뒤집기_2
+     */
+    public static String question_9093_2(String input) {
+        String[] inputArr = input.split(" ");
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : inputArr) {
+            String[] strings = s.split("");
+
+            for (int i=strings.length-1; i>-1; i--) {
+                sb.append(strings[i]);
+            }
+            sb.append(" ");
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * [Baekjoon] 9093 - 단어 뒤집기
+     */
+    public static String question_9093(String input) {
+        String[] inputArr = input.split(" ");
+
+        Stack<Character> stack = new Stack<>();
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : inputArr) {
+            char[] chars = s.toCharArray();
+            for (char c : chars) {
+                stack.push(c);
+            }
+
+            while (!stack.isEmpty()) {
+                sb.append(stack.pop());
+            }
+            sb.append(" ");
+        }
+        sb.setLength(sb.length()-1);
+
+        return sb.toString();
+    }
     /**
      * [Baekjoon] 1158 - 요세푸스
      */
