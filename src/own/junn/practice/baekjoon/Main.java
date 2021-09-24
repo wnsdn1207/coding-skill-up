@@ -10,33 +10,46 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int loopCount = Integer.parseInt(reader.readLine());
-        DequeImpl deque = new DequeImpl();
-        for (int i=0; i<loopCount; i++) {
-            String command = reader.readLine();
-
-            if (command.startsWith("push_front")) {
-                deque.pushFront(Integer.parseInt(command.split(" ")[1]));
-            } else if (command.startsWith("push_back")) {
-                deque.pushBack(Integer.parseInt(command.split(" ")[1]));
-            } else if (command.startsWith("pop_front")) {
-                writer.write(deque.popFront() + "\n");
-            } else if (command.startsWith("pop_back")){
-                writer.write(deque.popBack() + "\n");
-            } else if (command.startsWith("size")) {
-                writer.write(deque.size() + "\n");
-            } else if (command.startsWith("empty")) {
-                writer.write(deque.empty() + "\n");
-            } else if (command.startsWith("front")) {
-                writer.write(deque.front() + "\n");
-            } else if (command.startsWith("back")) {
-                writer.write(deque.back() + "\n");
-            }
-        }
+        writer.write(question_1158(reader.readLine().split(" ")));
 
         writer.flush();
         writer.close();
         reader.close();
+    }
+
+    /**
+     * [Baekjoon] 1158 - 요세푸스
+     */
+    public static String question_1158(String[] input) {
+        Queue<Integer> queue = new LinkedList<>();
+        int N = Integer.parseInt(input[0]);
+        int K = Integer.parseInt(input[1]);
+
+        for (int i=0; i<N; i++) {
+            int n = i+K;
+            if (n > N) {
+                n -= N;
+            }
+            queue.add(n);
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<");
+        while (!queue.isEmpty()) {
+            sb.append(queue.remove()).append(", ");
+
+            for (int i=0; i<K-1; i++) {
+                if (queue.size() == 0) {
+                    break;
+                }
+                queue.add(queue.remove());
+            }
+        }
+        sb.setLength(sb.length()-2);
+        sb.append(">");
+
+        return sb.toString();
     }
 
     /**
