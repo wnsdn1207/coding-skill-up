@@ -10,14 +10,118 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int caseCount = Integer.parseInt(reader.readLine());
-        for (int i=0; i<caseCount; i++) {
-            writer.write(question_9012(reader.readLine())+"\n");
-        }
+        int arrCount_1 = Integer.parseInt(reader.readLine());
+        String[] arr_1 = reader.readLine().split(" ");
+
+        int arrCount_2 = Integer.parseInt(reader.readLine());
+        String[] arr_2 = reader.readLine().split(" ");
+
+        writer.write(question_1920(arr_1, arr_2)+"\n");
 
         writer.flush();
         writer.close();
         reader.close();
+
+//        int bridgeLength = 2;
+//        int weight = 10;
+//        int[] trucks = {7,4,5,6};
+//        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
+    }
+
+    /**
+     * [Baekjoon] 1920 - 수 찾기
+     */
+    public static String question_1920(String[] standardArr, String[] comparedArr) {
+        StringBuilder sb = new StringBuilder();
+        Set<String> standardSet = new HashSet<>(Arrays.asList(standardArr));
+
+        for (String s : comparedArr) {
+            if (standardSet.contains(s)) {
+                sb.append("1\n");
+            } else {
+                sb.append("0\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * [Programmers] 다리를 지나는 트럭
+     *
+     * bridge_length	weight	truck_weights	                return
+     * 2	            10	    [7,4,5,6]	                    8
+     * 100	            100	    [10]	                        101
+     * 100	            100	    [10,10,10,10,10,10,10,10,10,10]	110
+     */
+    public static int truckPassingByBridge(int bridge_length, int weight, int[] truck_weights) {
+        Queue<Truck> waiting = new LinkedList<>();
+
+        for (int t : truck_weights) {
+            waiting.add(new Truck(0, t));
+        }
+
+        int elapsed = 0;
+        int totalWeight = 0;
+        List<Truck> bridge = new ArrayList<>(bridge_length);
+        while (waiting.size() > 0 || bridge.size() > 0) {
+            elapsed++;
+
+            Truck truck = waiting.peek();
+
+            if (weight >= totalWeight && bridge.size() <= bridge_length) {
+                bridge.add(truck);
+                totalWeight += truck != null ? truck.getWeight() : 0;
+                waiting.remove();
+            }
+
+            if (bridge_length == bridge.get(0).position) {
+                Truck removingTruck = bridge.remove(0);
+                totalWeight -= removingTruck.getWeight();
+
+                if (!waiting.isEmpty()) {
+                    if (weight > totalWeight + waiting.peek().getWeight() && bridge.size() <= bridge_length) {
+                        Truck passingTruck = waiting.remove();
+                        bridge.add(passingTruck);
+                        passingTruck.setPosition(passingTruck.getPosition()+1);
+                    }
+                }
+            }
+
+            if (bridge.size() > 0) {
+                for (Truck t : bridge) {
+                    t.setPosition(t.getPosition() + 1);
+                }
+            }
+        }
+
+        return elapsed;
+    }
+
+    private static class Truck {
+        private int position;
+        private int weight;
+
+        public Truck(int position, int weight) {
+            this.weight = weight;
+            this.position = position;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+
+        public void setWeight(int weight) {
+            this.weight = weight;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
     }
 
     /**
