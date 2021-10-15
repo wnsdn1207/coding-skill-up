@@ -1,31 +1,21 @@
 package own.junn.practice.baekjoon;
 
-import jdk.nashorn.internal.codegen.LocalStateRestorationInfo;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int caseCount = Integer.parseInt(reader.readLine());
-
-        for (int i=0; i<caseCount; i++) {
-            int netCount = Integer.parseInt(reader.readLine());
-
-            String[] networkRelations = new String[netCount];
-            for (int j=0; j<netCount; j++) {
-                networkRelations[j] = reader.readLine();
-            }
-
-//            writer.write(question_4195(netCount, networkRelations)+"\n");
-            question_4195(netCount, networkRelations);
+        int wordCount = Integer.parseInt(reader.readLine());
+        String[] words = new String[wordCount];
+        for (int i=0; i<wordCount; i++) {
+            words[i] = reader.readLine();
         }
+        writer.write(question_1181(words) + "\n");
 
         writer.flush();
         writer.close();
@@ -35,6 +25,65 @@ public class Main {
 //        int weight = 10;
 //        int[] trucks = {7,4,5,6};
 //        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
+    }
+
+    /**
+     * [Baekjoon] 1181 - 단어 정렬
+     */
+    public static String question_1181(String[] words) {
+//        for (int i=0; i<words.length; i++) {
+//            int standard = i;
+//            for (int j=i+1; j<words.length; j++) {
+//                if (words[standard].length() > words[j].length()) {
+//                    standard = j;
+//                } else if (words[standard].length() == words[j].length()) {
+//                    int idx = words[i].length();
+//                    for (int k=0; k<idx; k++) {
+//                        if (words[i].charAt(k) > words[j].charAt(k)) {
+//                            standard = j;
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//
+//            String tmp = words[i];
+//            words[i] = words[standard];
+//            words[standard] = tmp;
+//        }
+
+        StringBuilder sb = new StringBuilder();
+//        String prev = "";
+//        for (String s : words) {
+//            if (s.equalsIgnoreCase(prev)) {
+//                continue;
+//            }
+//            sb.append(s).append("\n");
+//            prev = s;
+//        }
+        return sb.toString();
+    }
+
+    /**
+     * [Baekjoon] 2750 - 수 정렬하기
+     */
+    private static String question_2750(int[] numbers) {
+        for (int i=0; i< numbers.length; i++) {
+            for (int j=i+1; j<numbers.length; j++) {
+                if (numbers[j] < numbers[i]) {
+                    int tmp = numbers[j];
+                    numbers[j] = numbers[i];
+                    numbers[i] = tmp;
+                }
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (int n : numbers) {
+            builder.append(n).append("\n");
+        }
+
+        return builder.toString();
     }
 
     /**
