@@ -40,46 +40,89 @@ public class Main {
     /**
      * [Baekjoon] 4195 - 친구 네트워크
      */
-    public static void question_4195(int count, String... networks) {
+    private static void question_4195(int netCnt, String[] relations) {
         HashMap<String, String> parent = new HashMap<>();
         HashMap<String, Integer> numbers = new HashMap<>();
 
-        for (String s : networks) {
-            String[] networkArr = s.split(" ");
+        for (String relation : relations) {
+            String[] inputs = relation.split(" ");
 
-            if (parent.get(networkArr[0]) == null) {
-                parent.put(networkArr[0], networkArr[0]);
-                numbers.put(networkArr[0], 1);
+            if (parent.get(inputs[0]) == null) {
+                parent.put(inputs[0], inputs[0]);
+                numbers.put(inputs[0], 1);
             }
-            if (parent.get(networkArr[1]) == null) {
-                parent.put(networkArr[1], networkArr[1]);
-                numbers.put(networkArr[1], 1);
+            if (parent.get(inputs[1]) == null) {
+                parent.put(inputs[1], inputs[1]);
+                numbers.put(inputs[1], 1);
             }
-
-            union(parent, numbers, networkArr[0], networkArr[1]);
-            System.out.println(numbers.get(findParent(parent, networkArr[0])));
+            unionNode(parent, numbers, inputs[0], inputs[1]);
+            System.out.println(numbers.get(findRoot(parent, inputs[0])));
         }
     }
 
-    private static void union(HashMap<String, String> parent, HashMap<String, Integer> numbers, String x, String y) {
-        x = findParent(parent, x);
-        y = findParent(parent, y);
+    private static String findRoot(HashMap<String, String> parent, String node) {
+        if (node.equals(parent.get(node))) {
+            return node;
+        } else {
+            String _node = findRoot(parent, parent.get(node));
+            parent.put(node, _node);
+            return _node;
+        }
+    }
 
-        if (!x.equalsIgnoreCase(y)) {
+    private static void unionNode(HashMap<String, String> parent, HashMap<String, Integer> numbers, String x, String y) {
+        x = findRoot(parent, x);
+        y = findRoot(parent, y);
+
+        if (!x.equals(y)) {
             parent.put(y, x);
             numbers.put(x, numbers.get(x) + numbers.get(y));
         }
     }
 
-    private static String findParent(HashMap<String, String> parent, String x) {
-        if (x.equalsIgnoreCase(parent.get(x))) {
-            return x;
-        } else {
-            String _x = findParent(parent, parent.get(x));
-            parent.put(x, _x);
-            return _x;
-        }
-    }
+//    /**
+//     * [Baekjoon] 4195 - 친구 네트워크
+//     */
+//    public static void question_4195(int count, String... networks) {
+//        HashMap<String, String> parent = new HashMap<>();
+//        HashMap<String, Integer> numbers = new HashMap<>();
+//
+//        for (String s : networks) {
+//            String[] networkArr = s.split(" ");
+//
+//            if (parent.get(networkArr[0]) == null) {
+//                parent.put(networkArr[0], networkArr[0]);
+//                numbers.put(networkArr[0], 1);
+//            }
+//            if (parent.get(networkArr[1]) == null) {
+//                parent.put(networkArr[1], networkArr[1]);
+//                numbers.put(networkArr[1], 1);
+//            }
+//
+//            union(parent, numbers, networkArr[0], networkArr[1]);
+//            System.out.println(numbers.get(findParent(parent, networkArr[0])));
+//        }
+//    }
+//
+//    private static void union(HashMap<String, String> parent, HashMap<String, Integer> numbers, String x, String y) {
+//        x = findParent(parent, x);
+//        y = findParent(parent, y);
+//
+//        if (!x.equalsIgnoreCase(y)) {
+//            parent.put(y, x);
+//            numbers.put(x, numbers.get(x) + numbers.get(y));
+//        }
+//    }
+//
+//    private static String findParent(HashMap<String, String> parent, String x) {
+//        if (x.equalsIgnoreCase(parent.get(x))) {
+//            return x;
+//        } else {
+//            String _x = findParent(parent, parent.get(x));
+//            parent.put(x, _x);
+//            return _x;
+//        }
+//    }
 
     /**
      * [Baekjoon] 1920 - 수 찾기
