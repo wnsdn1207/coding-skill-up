@@ -1,22 +1,31 @@
 package own.junn.practice.baekjoon;
 
+import jdk.nashorn.internal.codegen.LocalStateRestorationInfo;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int arrCount_1 = Integer.parseInt(reader.readLine());
-        String[] arr_1 = reader.readLine().split(" ");
+        int caseCount = Integer.parseInt(reader.readLine());
 
-        int arrCount_2 = Integer.parseInt(reader.readLine());
-        String[] arr_2 = reader.readLine().split(" ");
+        for (int i=0; i<caseCount; i++) {
+            int netCount = Integer.parseInt(reader.readLine());
 
-        writer.write(question_1920(arr_1, arr_2)+"\n");
+            String[] networkRelations = new String[netCount];
+            for (int j=0; j<netCount; j++) {
+                networkRelations[j] = reader.readLine();
+            }
+
+//            writer.write(question_4195(netCount, networkRelations)+"\n");
+            question_4195(netCount, networkRelations);
+        }
 
         writer.flush();
         writer.close();
@@ -26,6 +35,50 @@ public class Main {
 //        int weight = 10;
 //        int[] trucks = {7,4,5,6};
 //        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
+    }
+
+    /**
+     * [Baekjoon] 4195 - 친구 네트워크
+     */
+    public static void question_4195(int count, String... networks) {
+        HashMap<String, String> parent = new HashMap<>();
+        HashMap<String, Integer> numbers = new HashMap<>();
+
+        for (String s : networks) {
+            String[] networkArr = s.split(" ");
+
+            if (parent.get(networkArr[0]) == null) {
+                parent.put(networkArr[0], networkArr[0]);
+                numbers.put(networkArr[0], 1);
+            }
+            if (parent.get(networkArr[1]) == null) {
+                parent.put(networkArr[1], networkArr[1]);
+                numbers.put(networkArr[1], 1);
+            }
+
+            union(parent, numbers, networkArr[0], networkArr[1]);
+            System.out.println(numbers.get(findParent(parent, networkArr[0])));
+        }
+    }
+
+    private static void union(HashMap<String, String> parent, HashMap<String, Integer> numbers, String x, String y) {
+        x = findParent(parent, x);
+        y = findParent(parent, y);
+
+        if (!x.equalsIgnoreCase(y)) {
+            parent.put(y, x);
+            numbers.put(x, numbers.get(x) + numbers.get(y));
+        }
+    }
+
+    private static String findParent(HashMap<String, String> parent, String x) {
+        if (x.equalsIgnoreCase(parent.get(x))) {
+            return x;
+        } else {
+            String _x = findParent(parent, parent.get(x));
+            parent.put(x, _x);
+            return _x;
+        }
     }
 
     /**
