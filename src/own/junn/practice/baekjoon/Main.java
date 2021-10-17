@@ -11,11 +11,34 @@ public class Main {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int count = Integer.parseInt(reader.readLine());
-        String[] coordinates = new String[count];
+        int[] numbers = new int[9999];
+
         for (int i=0; i<count; i++) {
-            coordinates[i] = reader.readLine();
+            numbers[Integer.parseInt(reader.readLine()) - 1] += 1;
         }
-        writer.write(question_11650(coordinates) + "\n");
+        /**
+         * 계수 정렬 알고리즘 (Counting Sort)
+         *
+         * 10,000,000회 이상의 input
+         * But, input의 범위 < 10000
+         *
+         * 따라서, 범위를 이용한 정렬 방식
+         *
+         * 최대 10000의 범위를 미리 지정해놓고, 입력이 들어올 때마다 해당하는 숫자(index)값을 배열 내 숫자와 매핑시켜 해당 수를 증가시킴
+         * 추후, 증가된 수만큼 해당 숫자(index)값을 출력해주면 됨
+         */
+        for (int i=0; i<numbers.length; i++) {
+            if (numbers[i] > 0) {
+                for (int j=0; j<numbers[i]; j++) {
+                    writer.write((i+1) + "\n");
+                }
+            }
+        }
+
+//        for (int i=0; i<count; i++) {
+//            coordinates[i] = reader.readLine();
+//        }
+//        writer.write(question_11650(coordinates) + "\n");
 
         writer.flush();
         writer.close();
@@ -33,6 +56,14 @@ public class Main {
     public static int question_2217(int count, int[] weights) {
         Arrays.sort(weights);
         return count * weights[0];
+    }
+    /**
+     * [Baekjoon] 10989 - 수 정렬하기 3
+     */
+    public static String question_10989(int[] numbers) {
+
+
+        return "";
     }
     /**
      * [Baekjoon] 11650 - 좌표 정렬하기
