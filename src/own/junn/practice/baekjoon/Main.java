@@ -10,12 +10,12 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int wordCount = Integer.parseInt(reader.readLine());
-        String[] words = new String[wordCount];
-        for (int i=0; i<wordCount; i++) {
-            words[i] = reader.readLine();
+        int count = Integer.parseInt(reader.readLine());
+        String[] users = new String[count];
+        for (int i=0; i<count; i++) {
+            users[i] = reader.readLine();
         }
-        writer.write(question_1181(words) + "\n");
+        writer.write(question_10814(users) + "\n");
 
         writer.flush();
         writer.close();
@@ -27,6 +27,78 @@ public class Main {
 //        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
     }
 
+    /**
+     * [Baekjoon] 2217 - 로프
+     */
+    public static int question_2217(int count, int[] weights) {
+        Arrays.sort(weights);
+        return count * weights[0];
+    }
+    /**
+     * [Baekjoon] 10814 - 나이순 정렬
+     */
+    public static String question_10814(String[] users) {
+        List<User> userList = new ArrayList<>();
+        for (int i=0; i<users.length; i++) {
+            String[] tmpUser = users[i].split(" ");
+
+            userList.add(new User(tmpUser[1], Integer.parseInt(tmpUser[0]), i));
+        }
+
+        Comparator<User> comparator = (o1, o2) -> {
+            if (o1.age == o2.age) {
+                return o1.order - o2.order;
+            } else {
+                return o1.age - o2.age;
+            }
+        };
+
+        userList.sort(comparator);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (User user : userList) {
+            sb.append(user.getAge()).append(" ").append(user.getName()).append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    private static class User {
+        private String name;
+        private int age;
+        private int order;
+
+        public User(String name, int age, int order) {
+            this.name = name;
+            this.age = age;
+            this.order = order;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public int getOrder() {
+            return order;
+        }
+
+        public void setOrder(int order) {
+            this.order = order;
+        }
+    }
     /**
      * [Baekjoon] 1181 - 단어 정렬
      */
