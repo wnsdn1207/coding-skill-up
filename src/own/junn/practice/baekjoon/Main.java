@@ -31,36 +31,25 @@ public class Main {
      * [Baekjoon] 1181 - 단어 정렬
      */
     public static String question_1181(String[] words) {
-//        for (int i=0; i<words.length; i++) {
-//            int standard = i;
-//            for (int j=i+1; j<words.length; j++) {
-//                if (words[standard].length() > words[j].length()) {
-//                    standard = j;
-//                } else if (words[standard].length() == words[j].length()) {
-//                    int idx = words[i].length();
-//                    for (int k=0; k<idx; k++) {
-//                        if (words[i].charAt(k) > words[j].charAt(k)) {
-//                            standard = j;
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//
-//            String tmp = words[i];
-//            words[i] = words[standard];
-//            words[standard] = tmp;
-//        }
+        Arrays.sort(words, (o1, o2) -> {
+            if (o1.length() == o2.length()) {
+                return o1.compareTo(o2);
+            } else {
+                return o1.length() - o2.length();
+            }
+        });
 
         StringBuilder sb = new StringBuilder();
-//        String prev = "";
-//        for (String s : words) {
-//            if (s.equalsIgnoreCase(prev)) {
-//                continue;
-//            }
-//            sb.append(s).append("\n");
-//            prev = s;
-//        }
+        String prev = "";
+
+        for (String s : words) {
+            if (s.equalsIgnoreCase(prev)) {
+                continue;
+            }
+            sb.append(s).append("\n");
+            prev = s;
+        }
+
         return sb.toString();
     }
 
