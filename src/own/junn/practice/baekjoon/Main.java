@@ -11,11 +11,11 @@ public class Main {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int count = Integer.parseInt(reader.readLine());
-        String[] users = new String[count];
+        String[] coordinates = new String[count];
         for (int i=0; i<count; i++) {
-            users[i] = reader.readLine();
+            coordinates[i] = reader.readLine();
         }
-        writer.write(question_10814(users) + "\n");
+        writer.write(question_11650(coordinates) + "\n");
 
         writer.flush();
         writer.close();
@@ -33,6 +33,58 @@ public class Main {
     public static int question_2217(int count, int[] weights) {
         Arrays.sort(weights);
         return count * weights[0];
+    }
+    /**
+     * [Baekjoon] 11650 - 좌표 정렬하기
+     */
+    public static String question_11650(String[] coordinates) {
+        List<Coordinate> list = new ArrayList<>();
+        for (String c : coordinates) {
+            String[] tmp = c.split(" ");
+
+            list.add(new Coordinate(Integer.parseInt(tmp[0]), Integer.parseInt(tmp[1])));
+        }
+
+        list.sort((o1, o2) -> {
+            if (o1.getX() == o2.getX()) {
+                return o1.getY() - o2.getY();
+            } else {
+                return o1.getX() - o2.getX();
+            }
+        });
+
+        StringBuilder sb = new StringBuilder();
+        for (Coordinate c : list) {
+            sb.append(c.getX()).append(" ").append(c.getY()).append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    private static class Coordinate {
+        private int x;
+        private int y;
+
+        public Coordinate(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
     }
     /**
      * [Baekjoon] 10814 - 나이순 정렬
