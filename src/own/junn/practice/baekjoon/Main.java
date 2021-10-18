@@ -10,12 +10,16 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int count = Integer.parseInt(reader.readLine());
-        int[] ropeWeighs = new int[count];
-        for (int i=0; i<count; i++) {
-            ropeWeighs[i] = Integer.parseInt(reader.readLine());
+        String input = "Baekjoon Online Judge";
+        String output = "Onrxwbba Bayvar Whqtr";
+
+        for (int i=0; i<input.length(); i++) {
+            System.out.printf("input : %s(%d), output : %s(%d)\n",
+                    input.toCharArray()[i], (int) input.toCharArray()[i],
+                    output.toCharArray()[i], (int) output.toCharArray()[i]);
         }
-        writer.write(question_2217(ropeWeighs) + "\n");
+
+        writer.write(question_11655(reader.readLine()) + "\n");
 
         writer.flush();
         writer.close();
@@ -25,6 +29,43 @@ public class Main {
 //        int weight = 10;
 //        int[] trucks = {7,4,5,6};
 //        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
+    }
+
+    /**
+     * [BOJ] 11655 - ROT13
+     */
+    public static String question_11655(String input) {
+        /* ROT13 Encoding */
+        char[] inputArr = input.toCharArray();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<inputArr.length; i++) {
+            if (isLowerCase(inputArr[i])) {
+                if (isLowerCase(inputArr[i]+13)) {
+                    inputArr[i] = (char) (inputArr[i]+13);
+                } else if (isLowerCase(inputArr[i]-13)) {
+                    inputArr[i] = (char) (inputArr[i]-13);
+                }
+            } else if (isUpperCase(inputArr[i])) {
+                if (isUpperCase(inputArr[i]+13)) {
+                    inputArr[i] = (char) (inputArr[i]+13);
+                } else if (isUpperCase(inputArr[i]-13)) {
+                    inputArr[i] = (char) (inputArr[i]-13);
+                }
+            }
+
+            sb.append(inputArr[i]);
+        }
+
+        return sb.toString();
+    }
+
+    private static boolean isUpperCase(int alphabet) {
+        return alphabet > 64 && alphabet < 91;
+    }
+
+    private static boolean isLowerCase(int alphabet) {
+        return alphabet > 96 && alphabet < 123;
     }
 
     /**
