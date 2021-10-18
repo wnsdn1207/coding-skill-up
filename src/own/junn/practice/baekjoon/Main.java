@@ -11,14 +11,11 @@ public class Main {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int count = Integer.parseInt(reader.readLine());
-        int[] numbers = new int[10000];
-
-        question_10989(numbers, reader, writer, count);
-
-//        for (int i=0; i<count; i++) {
-//            coordinates[i] = reader.readLine();
-//        }
-//        writer.write(question_11650(coordinates) + "\n");
+        int[] ropeWeighs = new int[count];
+        for (int i=0; i<count; i++) {
+            ropeWeighs[i] = Integer.parseInt(reader.readLine());
+        }
+        writer.write(question_2217(ropeWeighs) + "\n");
 
         writer.flush();
         writer.close();
@@ -31,11 +28,19 @@ public class Main {
     }
 
     /**
-     * [Baekjoon] 2217 - 로프
+     * [BOJ] 2217 - 로프
      */
-    public static int question_2217(int count, int[] weights) {
+    public static int question_2217(int[] weights) {
         Arrays.sort(weights);
-        return count * weights[0];
+
+        int maxWeight = weights[weights.length-1];
+        int idx = weights.length-2;
+        while (idx >= 0) {
+            maxWeight = Math.max(maxWeight, weights[idx] * (weights.length-idx));
+            idx--;
+        }
+
+        return maxWeight;
     }
     /**
      * [Baekjoon] 10989 - 수 정렬하기 3
@@ -273,50 +278,6 @@ public class Main {
             numbers.put(x, numbers.get(x) + numbers.get(y));
         }
     }
-
-//    /**
-//     * [Baekjoon] 4195 - 친구 네트워크
-//     */
-//    public static void question_4195(int count, String... networks) {
-//        HashMap<String, String> parent = new HashMap<>();
-//        HashMap<String, Integer> numbers = new HashMap<>();
-//
-//        for (String s : networks) {
-//            String[] networkArr = s.split(" ");
-//
-//            if (parent.get(networkArr[0]) == null) {
-//                parent.put(networkArr[0], networkArr[0]);
-//                numbers.put(networkArr[0], 1);
-//            }
-//            if (parent.get(networkArr[1]) == null) {
-//                parent.put(networkArr[1], networkArr[1]);
-//                numbers.put(networkArr[1], 1);
-//            }
-//
-//            union(parent, numbers, networkArr[0], networkArr[1]);
-//            System.out.println(numbers.get(findParent(parent, networkArr[0])));
-//        }
-//    }
-//
-//    private static void union(HashMap<String, String> parent, HashMap<String, Integer> numbers, String x, String y) {
-//        x = findParent(parent, x);
-//        y = findParent(parent, y);
-//
-//        if (!x.equalsIgnoreCase(y)) {
-//            parent.put(y, x);
-//            numbers.put(x, numbers.get(x) + numbers.get(y));
-//        }
-//    }
-//
-//    private static String findParent(HashMap<String, String> parent, String x) {
-//        if (x.equalsIgnoreCase(parent.get(x))) {
-//            return x;
-//        } else {
-//            String _x = findParent(parent, parent.get(x));
-//            parent.put(x, _x);
-//            return _x;
-//        }
-//    }
 
     /**
      * [Baekjoon] 1920 - 수 찾기
