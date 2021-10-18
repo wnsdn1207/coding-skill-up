@@ -10,16 +10,13 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String input = "Baekjoon Online Judge";
-        String output = "Onrxwbba Bayvar Whqtr";
-
-        for (int i=0; i<input.length(); i++) {
-            System.out.printf("input : %s(%d), output : %s(%d)\n",
-                    input.toCharArray()[i], (int) input.toCharArray()[i],
-                    output.toCharArray()[i], (int) output.toCharArray()[i]);
+        int count = Integer.parseInt(reader.readLine());
+        String[] students = new String[count];
+        for (int i=0; i<count; i++) {
+            students[i] = reader.readLine();
         }
 
-        writer.write(question_11655(reader.readLine()) + "\n");
+        writer.write(question_2535(students) + "\n");
 
         writer.flush();
         writer.close();
@@ -31,6 +28,93 @@ public class Main {
 //        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
     }
 
+    /**
+     * [BOJ] 2535 - 아시아정보올림피아드
+     */
+    public static String question_2535(String[] students) {
+        ArrayList<Student> studentList = new ArrayList<>();
+        for (String s : students) {
+            String[] tmp = s.split(" ");
+            studentList.add(new Student(Integer.parseInt(tmp[0]), Integer.parseInt(tmp[1]), Integer.parseInt(tmp[2])));
+        }
+
+        studentList.sort((o1, o2) -> o2.getScore() - o1.getScore());
+
+        int addCount = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (Student s : studentList) {
+            if (map.get(s.getNationNum()) == null || map.get(s.getNationNum()) < 2) {
+                sb.append(s.getNationNum()).append(" ").append(s.getStudentNum()).append("\n");
+                addCount++;
+            }
+            map.put(s.getNationNum(), map.getOrDefault(s.getNationNum(), 0)+1);
+
+            if (addCount == 3) {
+                break;
+            }
+        }
+
+        return sb.toString();
+    }
+
+    private static class Student {
+        private int nationNum;
+        private int studentNum;
+        private int score;
+
+        public Student(int nationNum, int studentNum, int score) {
+            this.nationNum = nationNum;
+            this.studentNum = studentNum;
+            this.score = score;
+        }
+
+        public int getNationNum() {
+            return nationNum;
+        }
+
+        public int getStudentNum() {
+            return studentNum;
+        }
+
+        public int getScore() {
+            return score;
+        }
+
+        @Override
+        public String toString() {
+            return "Student{" +
+                    "nationNum=" + nationNum +
+                    ", studentNum=" + studentNum +
+                    ", score=" + score +
+                    '}';
+        }
+    }
+
+    /**
+     * [BOJ] 1292 - 쉽게푸는문제
+     */
+    public static int question_1292(int[] range) {
+        int[] numbers = new int[1000];
+        int natural = 1, idx = 0;
+        while (numbers[999] == 0) {
+            for (int i=0; i<natural; i++) {
+                numbers[idx++] = natural;
+                if (idx == 1000) {
+                    break;
+                }
+            }
+            natural++;
+        }
+
+        int sum = 0;
+        for (int i=range[0]-1; i<range[1]; i++) {
+            sum += numbers[i];
+        }
+
+        return sum;
+    }
     /**
      * [BOJ] 11655 - ROT13
      */
