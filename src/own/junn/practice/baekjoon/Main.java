@@ -10,13 +10,12 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int count = Integer.parseInt(reader.readLine());
-        String[] students = new String[count];
-        for (int i=0; i<count; i++) {
-            students[i] = reader.readLine();
-        }
+        int elementCount = Integer.parseInt(reader.readLine());
+        int needCount = Integer.parseInt(reader.readLine());
+        String elementString = reader.readLine();
 
-        writer.write(question_2535(students) + "\n");
+//        writer.write(question_1940(needCount, convertArrayType(elementString.split(" "))) + "\n");
+        writer.write(question_1940_2(needCount, convertArrayType(elementString.split(" "))) + "\n");
 
         writer.flush();
         writer.close();
@@ -28,6 +27,40 @@ public class Main {
 //        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
     }
 
+    /**
+     * [BOJ] 1940 - 주몽 (2)
+     */
+    public static int question_1940_2(int needCount, int[] elements) {
+        int makeCount = 0;
+        Set<Integer> elementSet = new HashSet<>();
+        for (int e : elements) {
+            elementSet.add(e);
+        }
+
+        for (int e : elementSet) {
+            int f = needCount - e;
+            if (elementSet.contains(f)) {
+                makeCount++;
+            }
+        }
+        return makeCount / 2;
+    }
+    /**
+     * [BOJ] 1940 - 주몽
+     *
+     */
+    public static int question_1940(int needCount, int[] elements) {
+        int makeCount = 0;
+        for (int i=0; i<elements.length; i++) {
+            for (int j=i+1; j<elements.length; j++) {
+                if (elements[i] + elements[j] == needCount) {
+                    makeCount++;
+                }
+            }
+        }
+
+        return makeCount;
+    }
     /**
      * [BOJ] 2535 - 아시아정보올림피아드
      */
