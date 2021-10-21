@@ -6,25 +6,75 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+    static int MIN = Integer.MAX_VALUE;
+
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int elementCount = Integer.parseInt(reader.readLine());
-        int needCount = Integer.parseInt(reader.readLine());
-        String elementString = reader.readLine();
+        int N = Integer.parseInt(reader.readLine());
 
-//        writer.write(question_1940(needCount, convertArrayType(elementString.split(" "))) + "\n");
-        writer.write(question_1940_2(needCount, convertArrayType(elementString.split(" "))) + "\n");
+        int[][] abilities = new int[N][N];
+        for (int i=0; i<N; i++) {
+            abilities[i] = convertArrayType(reader.readLine().split(" "));
+        }
+        question_14889(N, abilities);
+        System.out.println(MIN);
 
-        writer.flush();
-        writer.close();
         reader.close();
 
 //        int bridgeLength = 2;
 //        int weight = 10;
 //        int[] trucks = {7,4,5,6};
 //        System.out.println(truckPassingByBridge(bridgeLength, weight, trucks));
+    }
+
+    /**
+     * [BOJ] 14889 - 스타트와 링크
+     */
+    public static void question_14889(int N, int[][] abilities) {
+        boolean[] isUsed = new boolean[N];
+        dfs(0, N, 0, isUsed, abilities);
+    }
+
+    private static void dfs(int idx, int N, int count, boolean[] isUsed, int[][] abilities) {
+        if (count == N / 2) {
+            /* 최소값 구하기 */
+            getDiff(N, isUsed, abilities);
+            return;
+        }
+
+        for (int i=idx; i<N; i++) {
+            if (!isUsed[i]) {
+                isUsed[i] = true;
+                dfs(i+1, N,  count+1, isUsed, abilities);
+                isUsed[i] = false;
+            }
+        }
+    }
+
+    private static void getDiff(int N, boolean[] isUsed, int[][] abilities) {
+        int startTeam = 0, linkTeam = 0;
+
+        for (int i=0; i<N-1; i++) {
+            for (int j=i+1; j<N; j++) {
+                if (isUsed[i] && isUsed[j]) {
+                    startTeam += abilities[i][j];
+                    startTeam += abilities[j][i];
+                } else if (!isUsed[i] && !isUsed[j]) {
+                    linkTeam += abilities[i][j];
+                    linkTeam += abilities[j][i];
+                }
+            }
+        }
+
+        int diff = Math.abs(startTeam - linkTeam);
+
+        if (diff == 0) {
+            System.out.println(diff);
+            System.exit(0);
+        }
+
+        MIN = Math.min(MIN, diff);
     }
 
     /**
